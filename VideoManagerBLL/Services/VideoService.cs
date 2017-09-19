@@ -24,32 +24,35 @@ namespace VideoManagerBLL.Services
 
         public Video Delete(int Id)
         {
-            var vid = FakeDB.Videos.FirstOrDefault(x => x.Id == Id);
-            foreach (var video in FakeDB.Videos)
-            {
-                if (video.Id == Id)
-                {
-                    FakeDB.Videos.Remove(video);
-                    return video;
-                }
-                
-            }
-            return null;
+            var vid = Get(Id);
+            FakeDB.Videos.Remove(vid);
+            return vid;
         }
 
         public Video Get(int Id)
         {
-            throw new NotImplementedException();
+            return FakeDB.Videos.FirstOrDefault(x => x.Id == Id);
         }
 
         public List<Video> GetAll()
         {
-            throw new NotImplementedException();
+            return new List<Video>(FakeDB.Videos);
         }
 
         public Video Update(Video vid)
         {
-            throw new NotImplementedException();
+
+            var videoFromDb = Get(vid.Id);
+            if (videoFromDb == null)
+            {
+                throw new InvalidOperationException("Customer not Found");
+            }
+
+            videoFromDb.VideoName = vid.VideoName;
+            videoFromDb.Genre = vid.Genre;
+            videoFromDb.Year = vid.Year;
+            return videoFromDb;
+
         }
     }
 }

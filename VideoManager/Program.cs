@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using VideoManagerBLL;
 using VideoManagerEntity;
 
 namespace VideoManager
 {
     class Program
     {
-       
+        static BLLFacade bllFacade = new BLLFacade();
 
         static void Main(string[] args)
         {
@@ -16,17 +17,18 @@ namespace VideoManager
                 VideoName = "Gremlins",
                 Year = 1997,
                 Genre = "Horror",
-                Id = id++
+              
             };
             Video vid2 = new Video
             {
                 VideoName = "How High",
                 Year = 2007,
                 Genre = "Terrible",
-                Id = id++
+           
             };
-            videos.Add(vid1);
-            videos.Add(vid2);
+            bllFacade.VideoService.Create(vid1);
+            bllFacade.VideoService.Create(vid2);
+
 
 
             string[] menuItems =
@@ -89,16 +91,9 @@ namespace VideoManager
             {
                 Console.WriteLine("Insert a Number.");
             }
-         
 
-            foreach (var video in videos)
-            {
-                if (video.Id == id)
-                {
-                    return video;
-                }
-            }
-            return null;
+            return bllFacade.VideoService.Get(id);
+
         }
 
 
@@ -106,10 +101,7 @@ namespace VideoManager
         {
 
             var videoFound = FindVideoById();
-            if (videoFound != null)
-            {
-                videos.Remove(videoFound);
-            }
+            bllFacade.VideoService.Delete(videoFound.Id);
         }
 
         private static void AddVideos()
@@ -125,20 +117,18 @@ namespace VideoManager
 
          
 
-            videos.Add(new Video()
+           bllFacade.VideoService.Create(new Video()
             {
                 VideoName = vName,
                 Genre = vGenre,
                 Year = vYear,
-                Id = id++
-
             });
         }
 
         private static void ListVideos()
         {
             Console.WriteLine("List of Videos;");
-            foreach (var video in videos)
+            foreach (var video in bllFacade.VideoService.GetAll())
             {
                 Console.WriteLine($"Name:{video.VideoName} Year:{video.Year} Genre:{video.Genre} Id:{video.Id}");
             }
