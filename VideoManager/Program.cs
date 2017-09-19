@@ -6,10 +6,7 @@ namespace VideoManager
 {
     class Program
     {
-        #region Fake DB
-        static int id = 1;
-        static List<Video> videos = new List<Video>();
-        #endregion
+       
 
         static void Main(string[] args)
         {
