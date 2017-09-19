@@ -13,29 +13,29 @@ namespace VideoManagerBLL.Services
 
        public VideoService(IVideoRepository repo)
         {
-            this.repo
+            this.repo = repo;
         }
 
         public Video Create(Video vid)
         {
             
-            return null;
+            return repo.Create(vid);
         }
 
         public Video Delete(int Id)
         {
 
-            return null;
+            return repo.Delete(Id);
         }
 
         public Video Get(int Id)
         {
-            return null;
+            return repo.Get(Id);
         }
 
         public List<Video> GetAll()
         {
-            return null;
+            return repo.GetAll();
         }
 
         public Video Update(Video vid)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using VideoManagerBLL.Services;
+using VideoManagerDAL;
 
 namespace VideoManagerBLL
 {
@@ -9,7 +10,7 @@ namespace VideoManagerBLL
     {
         public IVideoService VideoService
         {
-            get { return new VideoService(); }
+            get { return new VideoService(new DALFacade().VideoRepository); }
         }
     }
 }
