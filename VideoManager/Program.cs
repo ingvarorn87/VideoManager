@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using VideoManagerBLL;
-using VideoManagerEntity;
+using VideoManagerBLL.BusinessObjects;
+using VideoManagerDAL.Entities;
 
 namespace VideoManager
 {
@@ -12,14 +13,14 @@ namespace VideoManager
         static void Main(string[] args)
         {
 
-            Video vid1 = new Video
+            var vid1 = new VideoBO
             {
                 VideoName = "Gremlins",
                 Year = 1997,
                 Genre = "Horror",
               
             };
-            Video vid2 = new Video
+            var vid2 = new VideoBO
             {
                 VideoName = "How High",
                 Year = 2007,
@@ -91,7 +92,7 @@ namespace VideoManager
 
         }
 
-        private static Video FindVideoById()
+        private static VideoBO FindVideoById()
         {
             Console.WriteLine("Insert Id of video to Delete:  ");
             int id;
@@ -133,7 +134,7 @@ namespace VideoManager
 
          
 
-           bllFacade.VideoService.Create(new Video()
+           bllFacade.VideoService.Create(new VideoBO()
             {
                 VideoName = vName,
                 Genre = vGenre,

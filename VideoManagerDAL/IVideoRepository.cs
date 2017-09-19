@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VideoManagerEntity;
+using VideoManagerDAL.Entities;
 
 namespace VideoManagerDAL
 {

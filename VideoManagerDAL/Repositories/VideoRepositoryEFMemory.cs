@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using VideoManagerDAL.Context;
-using VideoManagerEntity;
+using VideoManagerDAL.Entities;
 
 namespace VideoManagerDAL.Repositories
 {
