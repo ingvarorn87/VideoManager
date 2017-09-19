@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VideoManager
+namespace VideoManagerEntity
 {
-    class Video
+    public class Video
     {
         public string VideoName { get; set; }
         public string Genre { get; set; }
