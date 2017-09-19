@@ -71,15 +71,21 @@ namespace VideoManager
 
         private static void EditVideo()
         {
+            
             var video = FindVideoById();
-            Console.WriteLine("Name of Video?");
-            video.VideoName = Console.ReadLine();
-
-            Console.WriteLine("Genre of Video?");
-            video.Genre = Console.ReadLine();
-
-            Console.WriteLine("Year of Release?");
-            video.Year = Convert.ToInt32(Console.ReadLine());
+            if (video != null)
+            {
+                Console.WriteLine("Name of Video?");
+                video.VideoName = Console.ReadLine();
+                Console.WriteLine("Genre of Video?");
+                video.Genre = Console.ReadLine();
+                Console.WriteLine("Year of Release?");
+                video.Year = Convert.ToInt32(Console.ReadLine());
+            }
+            else
+            {
+                Console.WriteLine("Video not found");
+            }
 
         }
 
@@ -101,7 +107,15 @@ namespace VideoManager
         {
 
             var videoFound = FindVideoById();
-            bllFacade.VideoService.Delete(videoFound.Id);
+            if (videoFound != null)
+            {
+                bllFacade.VideoService.Delete(videoFound.Id);
+            }
+           
+            var response = videoFound == null ?
+                "Video not found" : "Video deleted: " + videoFound.VideoName;
+            Console.WriteLine(response);
+            
         }
 
         private static void AddVideos()

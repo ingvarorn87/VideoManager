@@ -9,34 +9,33 @@ namespace VideoManagerBLL.Services
 {
     class VideoService : IVideoService
     {
+        IVideoRepository repo;
+
+       public VideoService(IVideoRepository repo)
+        {
+            this.repo
+        }
+
         public Video Create(Video vid)
         {
-            Video newVid;
-            FakeDB.Videos.Add(newVid = new Video()
-                     {
-                       VideoName = vid.VideoName,
-                       Genre = vid.Genre,
-                       Year = vid.Year,
-                       Id = FakeDB.Id++
-                     });
-            return newVid;
+            
+            return null;
         }
 
         public Video Delete(int Id)
         {
-            var vid = Get(Id);
-            FakeDB.Videos.Remove(vid);
-            return vid;
+
+            return null;
         }
 
         public Video Get(int Id)
         {
-            return FakeDB.Videos.FirstOrDefault(x => x.Id == Id);
+            return null;
         }
 
         public List<Video> GetAll()
         {
-            return new List<Video>(FakeDB.Videos);
+            return null;
         }
 
         public Video Update(Video vid)
