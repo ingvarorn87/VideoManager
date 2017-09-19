@@ -9,49 +9,66 @@ namespace VideoManagerBLL.Services
 {
     class VideoService : IVideoService
     {
-        IVideoRepository repo;
 
-       public VideoService(IVideoRepository repo)
+        DALFacade facade;
+       public VideoService(DALFacade facade)
         {
-            this.repo = repo;
+            this.facade = facade;
         }
 
         public Video Create(Video vid)
         {
+            using (var uow = facade.UnitOfWork)
+            {
+                var newVid = uow.VideoRepository.Create(vid);
+                uow.Complete();
+                return newVid;
+            }
             
-            return repo.Create(vid);
         }
 
         public Video Delete(int Id)
         {
 
-            return repo.Delete(Id);
+            using (var uow = facade.UnitOfWork)
+            {
+                var newVid = uow.VideoRepository.Delete(Id);
+                uow.Complete();
+                return newVid;
+            }
         }
 
         public Video Get(int Id)
         {
-            return repo.Get(Id);
+            using (var uow = facade.UnitOfWork)
+            {
+                return uow.VideoRepository.Get(Id);
+            }
         }
 
         public List<Video> GetAll()
         {
-            return repo.GetAll();
+            using (var uow = facade.UnitOfWork)
+            {
+                return uow.VideoRepository.GetAll();
+            }
         }
 
         public Video Update(Video vid)
         {
-
-            var videoFromDb = Get(vid.Id);
-            if (videoFromDb == null)
+            using (var uow = facade.UnitOfWork)
             {
-                throw new InvalidOperationException("Customer not Found");
+                var videoFromDb = uow.VideoRepository.Get(vid.Id);
+                if (videoFromDb == null)
+                {
+                    throw new InvalidOperationException("Customer not Found");
+                }
+                videoFromDb.VideoName = vid.VideoName;
+                videoFromDb.Genre = vid.Genre;
+                videoFromDb.Year = vid.Year;
+                uow.Complete();
+                return videoFromDb;
             }
-
-            videoFromDb.VideoName = vid.VideoName;
-            videoFromDb.Genre = vid.Genre;
-            videoFromDb.Year = vid.Year;
-            return videoFromDb;
-
         }
     }
 }

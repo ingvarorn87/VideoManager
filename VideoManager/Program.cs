@@ -81,11 +81,13 @@ namespace VideoManager
                 video.Genre = Console.ReadLine();
                 Console.WriteLine("Year of Release?");
                 video.Year = Convert.ToInt32(Console.ReadLine());
+                bllFacade.VideoService.Update(video);
             }
             else
             {
                 Console.WriteLine("Video not found");
             }
+            
 
         }
 
