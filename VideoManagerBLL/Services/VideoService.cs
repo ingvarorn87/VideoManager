@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using VideoManagerBLL.BusinessObjects;
+using VideoManagerBLL.Converters;
 using VideoManagerDAL;
 using VideoManagerDAL.Entities;
 
@@ -11,7 +12,7 @@ namespace VideoManagerBLL.Services
 {
     class VideoService : IVideoService
     {
-
+        VideoConverter conv = new VideoConverter();
         DALFacade facade;
        public VideoService(DALFacade facade)
         {
@@ -22,9 +23,9 @@ namespace VideoManagerBLL.Services
         {
             using (var uow = facade.UnitOfWork)
             {
-                var newVid = uow.VideoRepository.Create(Convert(vid));
+                var newVid = uow.VideoRepository.Create(conv.Convert(vid));
                 uow.Complete();
-                return Convert(newVid);
+                return conv.Convert(newVid);
             }
             
         }
@@ -36,7 +37,7 @@ namespace VideoManagerBLL.Services
             {
                 var newVid = uow.VideoRepository.Delete(Id);
                 uow.Complete();
-                return Convert(newVid);
+                return conv.Convert(newVid);
             }
         }
 
@@ -44,7 +45,7 @@ namespace VideoManagerBLL.Services
         {
             using (var uow = facade.UnitOfWork)
             {
-                return Convert(uow.VideoRepository.Get(Id));
+                return conv.Convert(uow.VideoRepository.Get(Id));
             }
         }
 
@@ -54,7 +55,7 @@ namespace VideoManagerBLL.Services
             {
 
                 //return uow.VideoRepository.GetAll();
-                return uow.VideoRepository.GetAll().Select(c => Convert(c)).ToList();
+                return uow.VideoRepository.GetAll().Select(c => conv.Convert(c)).ToList();
             }
         }
 
@@ -71,30 +72,9 @@ namespace VideoManagerBLL.Services
                 videoFromDb.Genre = vid.Genre;
                 videoFromDb.Year = vid.Year;
                 uow.Complete();
-                return Convert(videoFromDb);
+                return conv.Convert(videoFromDb);
             }
         }
-        private Video Convert(VideoBO vid)
-        {
-            return new Video()
-            {
-                Id = vid.Id,
-                VideoName = vid.VideoName,
-                Year = vid.Year,
-                Genre = vid.Genre
 
-            };
-        }
-        private VideoBO Convert(Video vid)
-        {
-            return new VideoBO()
-            {
-                Id = vid.Id,
-                VideoName = vid.VideoName,
-                Year = vid.Year,
-                Genre = vid.Genre
-
-            };
-        }
     }
 }
